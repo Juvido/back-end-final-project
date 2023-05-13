@@ -6,18 +6,21 @@ export default async function attachCurrentUser(req, res, next) {
 
     const user = await UserModel.findOne(
       { _id: userData._id },
-      { passwordHash: 0 }
+      //{ passwordHash: 0 } // talvez possa apagar
     );
-
+    
     if (!user) {
-      return res.status(404).json({ msg: "User not found." });
+      return res.status(400).json({ msg: "User not found!" });
     }
+
+    delete user._doc.passwordHash;
 
     req.currentUser = user;
 
     next();
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json(e);
   }
 }
+

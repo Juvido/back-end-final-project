@@ -18,35 +18,33 @@ userRouter.post("/signup", async (req, res) => {
       )
     ) {
       return res.status(400).json({
-        msg: "Email ou senha invalidos. Verifique se ambos atendem as requisições.",
+        msg: "Email ou senha invalidos. Verifique se atendem as condições.",
       });
     }
 
     const salt = await bcrypt.genSalt(SALT_ROUNDS);
-
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const createdUser = await UserModel.create({
+    const user = await UserModel.create({
       ...req.body,
       passwordHash: hashedPassword,
     });
 
-    delete createdUser._doc.passwordHash;
-    return res.status(201).json(createdUser);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
+    delete user._doc.passwordHash;
+    return res.status(201).json(user);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
   }
 });
 
 userRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await UserModel.findOne({ email: email });
 
     if (!user) {
-      return res.status(404).json({ msg: "Email ou senha invalidos." });
+      return res.status(404).json({ msg: "Email ou senha invalidos. Verifique e tente novamente" });
     }
 
     if (await bcrypt.compare(password, user.passwordHash)) {
@@ -62,11 +60,11 @@ userRouter.post("/login", async (req, res) => {
         token: token,
       });
     } else {
-      return res.status(401).json({ msg: "Email ou senha invalidos." });
+      return res.status(404).json({ msg: "Email ou senha invalidos. Verifique e tente novamente" });
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
   }
 });
 

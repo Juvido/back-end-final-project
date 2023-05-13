@@ -1,11 +1,9 @@
-# API RESTful template + Token Based Auth
+# Back-End
 
-Template para construção de APIs utilizando Node, Express, JWT e Mongoose.
+Back-End to an API construction, using Node, Express, JWT and Mongoose.
+It's a part of the final project the Web Development Bootcamp at IronHack.
 
-**Utilização:**
+## About template Model
 
-- Clique no botão "Use this template"
-- Clone o repo que for criado nesse processo
-- Execute o comando `npm install` no terminal na raiz do projeto
-- Crie um arquivo `.env` baseado no arquivo `.exemple.env` presente no repositório e preencha as variaveis
-- Para colocar o servidor para rodar, execute no terminal o comando `npm run dev`
+The general template was built and provided by Teacher [Alexandre Lima](https://github.com/alexandreatlima/rest-api-template).
+

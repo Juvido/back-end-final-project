@@ -32,4 +32,45 @@ commentRouter.post("/:postId", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
+commentRouter.delete(
+  "/:commentId",
+  isAuth,
+  attachCurrentUser,
+  async (req, res) => {
+    try {
+      const comment = await CommentModel.findOne({
+        _id: req.params.commentId,
+      }).populate("referencePost");
+
+      if (
+        !comment.creator === req.currentUser._id ||
+        !comment.referencePost.creator === req.currentUser._id
+      ) {
+        return res
+          .status(401)
+          .json("Acesso negado. Voce nao pode excluir esse comentario");
+      }
+      const deletedComment = await CommentModel.deleteOne({
+        _id: req.params.commentId,
+      });
+
+      await PostModel.findOneAndUpdate(
+        { _id: comment.referencePost },
+        { $pull: { comments: comment._id } },
+        { runValidators: true }
+      );
+
+      await UserModel.findOneAndUpdate(
+        { _id: req.currentUser._id },
+        { $pull: { comments: comment._id } },
+        { runValidators: true }
+      );
+      return res.status(200).json(deletedComment)
+
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json(e);
+    }
+  }
+);
 export { commentRouter };

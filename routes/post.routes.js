@@ -26,7 +26,7 @@ postRouter.post("/", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
-postRouter.get("/my-posts", isAuth, attachCurrentUser, async (req, res) => {
+postRouter.get("/meus-posts", isAuth, attachCurrentUser, async (req, res) => {
     try {
         const userPosts = await PostModel.find({ creator: req.currentUser._id })
         
@@ -35,6 +35,17 @@ postRouter.get("/my-posts", isAuth, attachCurrentUser, async (req, res) => {
         console.log(e);
         return res.status(400).json(e);
       }
+});
+
+postRouter.get("/:id", async (req, res) => {
+  try {
+    const post = await PostModel.findOne({ id: req.params.id })
+    
+    return res.status(200).json(post);
+} catch(e) {
+    console.log(e);
+    return res.status(400).json(e);
+  }
 })
 
 export { postRouter };

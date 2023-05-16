@@ -1,5 +1,6 @@
 import express from "express";
 import { uploadImg } from "../config/cloudinary.config.js";
+
 const uploadImgRouter = express.Router();
 
 uploadImgRouter.post("/", uploadImg.single("picture"), (req, res) => {

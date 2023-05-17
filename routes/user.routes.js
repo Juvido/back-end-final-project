@@ -18,7 +18,7 @@ userRouter.post("/signup", async (req, res) => {
       )
     ) {
       return res.status(400).json({
-        msg: "Email ou senha invalidos. Verifique se atendem as condições.",
+        msg: "Email ou senha inválidos. Verifique se atendem as condições.",
       });
     }
 
@@ -44,7 +44,7 @@ userRouter.post("/login", async (req, res) => {
     const user = await UserModel.findOne({ email: email });
 
     if (!user) {
-      return res.status(404).json({ msg: "Email ou senha invalidos. Verifique e tente novamente" });
+      return res.status(404).json({ msg: "Email ou senha inválidos. Verifique e tente novamente" });
     }
 
     if (await bcrypt.compare(password, user.passwordHash)) {
@@ -60,7 +60,7 @@ userRouter.post("/login", async (req, res) => {
         token: token,
       });
     } else {
-      return res.status(404).json({ msg: "Email ou senha invalidos. Verifique e tente novamente" });
+      return res.status(404).json({ msg: "Email ou senha inválidos. Verifique e tente novamente" });
     }
   } catch (e) {
     console.log(e);

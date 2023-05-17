@@ -38,6 +38,16 @@ postRouter.get("/meus-posts", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
+postRouter.get("/all-posts", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+    const allPosts = await PostModel.find({});
+    return res.status(200).json(allPosts);
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json(e);
+  }
+});
+
 postRouter.get("/:id", async (req, res) => {
   try {
     const post = await PostModel.findOne({ _id: req.params.id }).populate(

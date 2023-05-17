@@ -48,7 +48,7 @@ commentRouter.delete(
       ) {
         return res
           .status(401)
-          .json("Acesso negado. Voce nao pode excluir esse comentario");
+          .json("Acesso negado. Voce não tem autorização para excluir esse comentário");
       }
       const deletedComment = await CommentModel.deleteOne({
         _id: req.params.commentId,

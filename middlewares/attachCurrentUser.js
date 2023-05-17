@@ -10,7 +10,7 @@ export default async function attachCurrentUser(req, res, next) {
     );
     
     if (!user) {
-      return res.status(400).json({ msg: "User not found!" });
+      return res.status(400).json({ msg: "Usuário não encontrado!" });
     }
 
     delete user._doc.passwordHash;

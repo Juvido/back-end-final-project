@@ -3,7 +3,6 @@ import isAuth from "../middlewares/isAuth.js";
 import attachCurrentUser from "../middlewares/attachCurrentUser.js";
 import { PostModel } from "../model/post.model.js";
 import { UserModel } from "../model/user.model.js";
-import { CommentModel } from "../model/comment.model.js";
 
 const postRouter = express.Router();
 

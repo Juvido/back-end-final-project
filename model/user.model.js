@@ -13,7 +13,8 @@ const userSchema = new Schema({
   role: { type: String, enum: ["ADMIN", "USER"], default: "USER" },
   createdAt: { type: Date, default: Date.now() },
   posts: [{type: Types.ObjectId, ref: "Post"}],
-  comments: [{type: Types.ObjectId, ref: "Comment"}]
+  comments: [{type: Types.ObjectId, ref: "Comment"}],
+  avatar: {type: String, default: "https://res.cloudinary.com/dig8rqnan/image/upload/v1684429771/pictures/file_e9bbjp.png" }
 });
 
 export const UserModel = model("User", userSchema);

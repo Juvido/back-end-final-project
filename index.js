@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/user", userRouter);
-app.use("/uploadImage", uploadImgRouter);
+app.use("/upload", uploadImgRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter)
 

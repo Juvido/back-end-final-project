@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import express from "express";
 import { generateToken } from "../config/jwt.config.js";
 import { UserModel } from "../model/user.model.js";
+import isAuth from "../middlewares/isAuth.js";
+import attachCurrentUser from "../middlewares/attachCurrentUser.js";
 
 const SALT_ROUNDS = 10;
 
@@ -66,6 +68,11 @@ userRouter.post("/login", async (req, res) => {
     console.log(e);
     return res.status(500).json(e);
   }
+
 });
+
+userRouter.get("/profile", isAuth, attachCurrentUser, (req, res)=>{
+  return res.status(200).json(req.currentUser)
+})
 
 export { userRouter };
